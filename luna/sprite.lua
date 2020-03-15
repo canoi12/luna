@@ -6,8 +6,8 @@ local function create_quads(sprite)
 	local imgw, imgh = sprite.image:getDimensions()
 	local fw, fh = sprite.frame_width, sprite.frame_height
 
-	for y=0,imgh-fh,fh do
-		for x=0,imgw-fw,fw do
+	for y = 0, imgh - fh, fh do
+		for x = 0, imgw - fw, fw do
 			table.insert(sprite.quads, love.graphics.newQuad(x, y, fw, fh, imgw, imgh))
 		end
 	end
@@ -32,18 +32,20 @@ function Sprite:constructor(image, frame_width, frame_height, options)
 	self.quads = {}
 	self.flip_h = 1
 	self.flip_v = 1
-	self.center_x = self.frame_width/2
-	self.center_y = self.frame_height/2
+	self.center_x = self.frame_width / 2
+	self.center_y = self.frame_height / 2
 	self.angle = 0
 	self.scale_x = 1
 	self.scale_y = 1
 
 	self.on_start_callback = {
-		fn = function() end,
+		fn = function()
+		end,
 		props = {}
 	}
 	self.on_end_callback = {
-		fn = function() end,
+		fn = function()
+		end,
 		props = {}
 	}
 
@@ -52,7 +54,7 @@ function Sprite:constructor(image, frame_width, frame_height, options)
 	self.frame = 1
 	self.initial_speed = 0.12
 	self.speed = self.initial_speed
-	for key,option in pairs(options) do
+	for key, option in pairs(options) do
 		self[key] = option
 	end
 end
@@ -60,19 +62,23 @@ end
 function Sprite:add_animation(name, frames, loop)
 	local animation = {}
 	animation.loop = loop or true
-	for word in string.gmatch(frames, '([^,]+)') do
+	for word in string.gmatch(frames, "([^,]+)") do
 		local from, to, delta = 0, 0, 1
 		if string.find(word, "-") then
-			local n1, n2 = word:match('([^,]+)-([^,]+)')
+			local n1, n2 = word:match("([^,]+)-([^,]+)")
 			from = tonumber(n1)
 			to = tonumber(n2)
-			if from < to then delta = 1 else delta = -1 end
+			if from < to then
+				delta = 1
+			else
+				delta = -1
+			end
 		else
 			from = tonumber(word)
 			to = from
 		end
 
-		for i=from,to,delta do
+		for i = from, to, delta do
 			table.insert(animation, i)
 		end
 	end
@@ -103,18 +109,27 @@ function Sprite:set_size(width, height)
 	self.frame_height = height or width or self.frame_height
 end
 
+function Sprite:flip(flip_h, flip_v)
+	self.flip_h = flip_h and 1 or -1
+	self.flip_v = flip_v and 1 or -1
+end
+
 function Sprite:rotate(angle)
 	self.angle = math.rad(angle)
 end
 
 function Sprite:on_start(props, callback)
-	if type(callback) ~= "function" then return end
+	if type(callback) ~= "function" then
+		return
+	end
 	self.on_start_callback.fn = callback
 	self.on_start_callback.props = props or {}
 end
 
 function Sprite:on_end(props, callback)
-	if type(callback) ~= "function" then return end
+	if type(callback) ~= "function" then
+		return
+	end
 	self.on_end_callback.fn = callback
 	print(props)
 	self.on_end_callback.props = props or {}
@@ -132,7 +147,7 @@ end
 
 function Sprite:update(dt)
 	if self.animation ~= "" then
-		self.speed = self.speed - (1  * dt)
+		self.speed = self.speed - (1 * dt)
 		if self.speed <= 0 then
 			self.speed = self.initial_speed
 			self.animation_frame = self.animation_frame + 1
@@ -143,15 +158,26 @@ function Sprite:update(dt)
 		end
 		self.frame = self.animations[self.animation][self.animation_frame] or 1
 	end
-	if self.frame > #self.quads then self.frame = 1 end
+	if self.frame > #self.quads then
+		self.frame = 1
+	end
 end
 
 function Sprite:draw(x, y)
-	love.graphics.draw(self.image, self.quads[self.frame], x, y, self.angle, self.scale_x * self.flip_h, self.scale_y * self.flip_v, self.center_x, self.center_y)
+	love.graphics.draw(
+		self.image,
+		self.quads[self.frame],
+		x,
+		y,
+		self.angle,
+		self.scale_x * self.flip_h,
+		self.scale_y * self.flip_v,
+		self.center_x,
+		self.center_y
+	)
 end
 
 function Sprite:createAnimation(name, first, last)
-	
 end
 
 return Sprite

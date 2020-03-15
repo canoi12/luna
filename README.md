@@ -2,6 +2,8 @@
 
 A set of love2d helpers lib
 
+---
+
 ## luna.input
 
 ```lua
@@ -15,7 +17,7 @@ end
 function love.update(dt)
 	input.update(dt)
 
-	if input.isMouseClicked(1) then 
+	if input.isMouseClicked(1) then
 		input.fixMousePos() -- call this function before use 'input.getMouseDelta()'
 	end
 
@@ -31,6 +33,7 @@ end
 ```
 
 ### TODO
+
 - [ ] Joystick support
 - [x] Named input: `input.isPressed("jump") ~> '"jump" = "space", "c", ...'`
 
@@ -69,4 +72,43 @@ function love.draw()
 	p2:draw()
 end
 
+```
+
+## luna.sprite
+
+### Sprite(image or path, frame_width, [frame_height (frame_width)])
+
+```lua
+local Sprite = require("luna.sprite")
+local input = require("luna.input")
+local sprite = Sprite("assets/knight.png", 16)
+
+local x, y = 0, 0
+
+function love.load()
+	sprite:add_animation("idle", "1-4")
+	sprite:add_animation("walk", "5-10")
+end
+
+function love.update(dt)
+	input.update(dt)
+
+	if input.isKeyDown("left") then
+		x = x - 100 * dt
+		sprite:play("walk")
+		sprite:flip(true)
+	elseif input.isKeyDown("right") then
+		x = x + 100 * dt
+		sprite:play("walk")
+		sprite:flip(false)
+	else
+		sprite:play("idle")
+	end
+
+	sprite:update(dt)
+end
+
+function love.draw()
+	sprite:draw(x, y)
+end
 ```
