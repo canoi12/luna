@@ -12,7 +12,7 @@ local states = {
 	}
 }
 
-old_state = {
+local old_state = {
 	mouse = {
 		down = {}
 	},
