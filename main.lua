@@ -37,11 +37,11 @@ function love.update(dt)
 	if input.isKeyDown("left") then
 		x = x - 80 * dt
 		sprite:play("walk")
-		sprite.flip_h = -1
+		sprite:flip(true)
 	elseif input.isKeyDown("right") then
 		x = x + 80 * dt
 		sprite:play("walk")
-		sprite.flip_h = 1
+		sprite:flip(false)
 	else
 		sprite:play("idle")
 	end

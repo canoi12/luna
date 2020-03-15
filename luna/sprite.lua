@@ -110,8 +110,8 @@ function Sprite:set_size(width, height)
 end
 
 function Sprite:flip(flip_h, flip_v)
-	self.flip_h = flip_h and 1 or -1
-	self.flip_v = flip_v and 1 or -1
+	self.flip_h = not flip_h and 1 or -1
+	self.flip_v = not flip_v and 1 or -1
 end
 
 function Sprite:rotate(angle)

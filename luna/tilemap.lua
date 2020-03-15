@@ -37,7 +37,6 @@ function Tilemap:draw()
     for xx = 1, self.width do
       local ax, ay = 0, 0
       local tile = (self.width * (yy-1)) + xx
-      print(tile)
       love.graphics.draw(self.tileset.image, self.tileset.quads[self.map[tile]], xx*self.tile_w-self.tile_w, yy*self.tile_h-self.tile_h)
     end
   end
