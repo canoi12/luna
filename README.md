@@ -30,7 +30,7 @@ function love.update(dt)
 end
 ```
 
-#### TODO
+### TODO
 
 - [ ] Joystick support
 - [x] Named input: `input.isPressed("jump") ~> '"jump" = "space", "c", ...'`
@@ -74,7 +74,7 @@ end
 
 ## luna.sprite
 
-##### Sprite(image or path, frame_width, [frame_height (frame_width)])
+#### Sprite(image or path, frame_width, [frame_height (frame_width)])
 
 ```lua
 local Sprite = require("luna.sprite")
@@ -113,28 +113,28 @@ end
 
 ## luna.camera
 
-##### Camera(x, y, width, height [, zoom (1), angle (0)])
+#### Camera(x, y, width, height [, zoom (1), angle (0)])
 Constructor for camera class
 
-##### :update(dt)
+#### :update(dt)
 Update camera (needed for smooth functions and follow target)
 
-##### :move(x, y [, smooth (false)])
+#### :move(x, y [, smooth (false)])
 Move camera to position
 
-##### :rotate(angle [, smooth])
+#### :rotate(angle [, smooth])
 Rotate camera
 
-##### :set_zoom(zoom [, smooth])
+#### :set_zoom(zoom [, smooth])
 Zoom (scale) camera
 
-##### :offset(ox (string or number) [, oy (ox)])
+#### :offset(ox (string or number) [, oy (ox)])
 Change camera offset, `ox` string arg can be: "center", "left", "right" and `oy` string arg can be "top", "center", "bottom"
 
-##### :attach()
+#### :attach()
 Attach camera for apply transform
 
-##### :detach()
+#### :detach()
 Pop camera
 
 ```lua
@@ -157,7 +157,7 @@ end
 
 ## luna.canvas
 
-##### Canvas(width, height [, filter ("nearest")])
+#### Canvas(width, height [, filter ("nearest")])
 Constructor for canvas
 
 #### :attach()
