@@ -2,8 +2,6 @@
 
 A set of love2d helpers lib
 
----
-
 ## luna.input
 
 ```lua
@@ -110,5 +108,57 @@ end
 
 function love.draw()
 	sprite:draw(x, y)
+end
+```
+
+## luna.camera
+
+### Camera(x, y, width, height [, zoom (1), angle (0)])
+
+Constructor for camera class
+
+### :update(dt)
+
+Update camera (needed for smooth functions and follow target)
+
+### :move(x, y [, smooth (false)])
+
+Move camera to position
+
+### :rotate(angle [, smooth])
+
+Rotate camera
+
+### :set_zoom(zoom [, smooth])
+
+Zoom (scale) camera
+
+### :offset(ox (string or number) [, oy (ox)])
+
+Change camera offset, `ox` string arg can be: "center", "left", "right" and `oy` string arg can be "top", "center", "bottom"
+
+### :attach()
+
+Attach camera for apply transform
+
+### :detach()
+
+Pop camera
+
+```lua
+local Camera = require("luna.camera")
+
+function love.load()
+	camera = Camera(0, 0, 320, 160)
+end
+
+function love.update(dt)
+	camera:update(dt)
+end
+
+function love.draw()
+	camera:attach()
+	-- draw stuff here
+	camera:detach()
 end
 ```

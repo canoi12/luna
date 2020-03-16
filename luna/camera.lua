@@ -1,7 +1,6 @@
 local Class = require("luna.class")
 local Camera = Class:extend("Camera")
-
-local function lerp(a,b,t) return a * (1-t) + b * t end
+local utils = require("luna.utils")
 
 function Camera:constructor(x, y, width, height, zoom, angle)
 	self.x = x or 0
@@ -62,9 +61,9 @@ function Camera:offset(ox, oy)
 	if type(oy) == "string" then
 		if oy == "center" then
 			self.offset_y = self.height / 2
-		elseif oy == "top" then
+		elseif oy == "top" or oy == "left" then
 			self.offset_y = 0
-		elseif oy == "bottom" then
+		elseif oy == "bottom" or oy == "right" then
 			self.offset_y = self.height
 		end
 	elseif type(oy) == "number" then
@@ -83,10 +82,10 @@ function Camera:update(dt)
 	if self.target then
 		self:move(self.target.obj.x, self.target.obj.y, self.target.smooth)
 	end
-	self.zoom = lerp(self.zoom, self.smooth.zoom, 5 * dt)
-	self.angle = lerp(self.angle, self.smooth.angle, 5 * dt)
-	self.x = lerp(self.x, self.smooth.x, 5 * dt)
-	self.y = lerp(self.y, self.smooth.y, 5 * dt)
+	self.zoom = utils.lerp(self.zoom, self.smooth.zoom, 5 * dt)
+	self.angle = utils.lerp(self.angle, self.smooth.angle, 5 * dt)
+	self.x = utils.lerp(self.x, self.smooth.x, 5 * dt)
+	self.y = utils.lerp(self.y, self.smooth.y, 5 * dt)
 	
 end
 

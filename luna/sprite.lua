@@ -1,5 +1,6 @@
 local Class = require("luna.class")
 local Sprite = Class:extend("Sprite")
+local utils = require("luna.utils")
 
 local function create_quads(sprite)
 	sprite.quads = {}
@@ -62,7 +63,7 @@ end
 function Sprite:add_animation(name, frames, loop)
 	local animation = {}
 	animation.loop = loop or true
-	for word in string.gmatch(frames, "([^,]+)") do
+	for word in utils.split(frames) do
 		local from, to, delta = 0, 0, 1
 		if string.find(word, "-") then
 			local n1, n2 = word:match("([^,]+)-([^,]+)")

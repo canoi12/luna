@@ -55,10 +55,10 @@ end
 function Tileset:add_animtile(animtile_table)
 end
 
-function Tileset:draw()
+function Tileset:draw(width)
   local yy = 0
   local xx = 0
-  local ww = 160
+  local ww = width or 160
   for i, quad in ipairs(self.quads) do
     if xx >= ww-self.tile_w then
       yy = yy + self.tile_h
