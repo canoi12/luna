@@ -1,7 +1,7 @@
 local Class = require("luna.class")
 local Canvas = Class:extend("Canvas")
 
-function Canvas:constructor(width, height, scale, filter)
+function Canvas:constructor(width, height, filter)
 	local width = width or love.graphics.getWidth()
 	local height = height or love.graphics.getHeight()
 	local filter = filter or "nearest"
@@ -9,7 +9,7 @@ function Canvas:constructor(width, height, scale, filter)
 	self.height = height
 	self.canvas = love.graphics.newCanvas(width, height)
 	self.canvas:setFilter(filter, filter)
-	self.scale = scale or 1
+	self.scale = 1
 	self.aspect = 1
 	self.x = 0
 	self.y = 0
@@ -45,7 +45,6 @@ end
 
 function Canvas:draw()
 	love.graphics.draw(self.canvas, self.x, self.y, 0, self.aspect, self.aspect, self.width/2, self.height/2)
-	love.graphics.print(self.aspect, 32, 32)
 end
 
 return Canvas

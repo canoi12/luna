@@ -114,35 +114,27 @@ end
 ## luna.camera
 
 ### Camera(x, y, width, height [, zoom (1), angle (0)])
-
 Constructor for camera class
 
 ### :update(dt)
-
 Update camera (needed for smooth functions and follow target)
 
 ### :move(x, y [, smooth (false)])
-
 Move camera to position
 
 ### :rotate(angle [, smooth])
-
 Rotate camera
 
 ### :set_zoom(zoom [, smooth])
-
 Zoom (scale) camera
 
 ### :offset(ox (string or number) [, oy (ox)])
-
 Change camera offset, `ox` string arg can be: "center", "left", "right" and `oy` string arg can be "top", "center", "bottom"
 
 ### :attach()
-
 Attach camera for apply transform
 
 ### :detach()
-
 Pop camera
 
 ```lua
@@ -161,4 +153,48 @@ function love.draw()
 	-- draw stuff here
 	camera:detach()
 end
+```
+
+## luna.canvas
+
+### Canvas(width, height [, filter ("nearest")])
+Constructor for canvas
+
+### :attach()
+Bind canvas
+
+### :detach()
+Unbind canvas
+
+### :draw()
+Draw canvas
+
+### :on_resize(w, h)
+Callback function to autoscale canvas, if you rewrite `love.resize`, call that function inside that
+
+You can use Canvas with Camera module
+
+```lua
+local Canvas = require("luna.canvas")
+local Camera = require("luna.camera")
+
+function love.load()
+	canvas = Canvas(160, 90)
+	camera = Camera(0, 0, 160, 90)
+end
+
+function love.update(dt)
+	camera:update(dt)
+end
+
+function love.draw()
+	canvas:attach()
+	camera:attach()
+	-- draw stuff here
+	camera:detach()
+	canvas:detach()
+
+	canvas:draw()
+end
+
 ```
