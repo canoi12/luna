@@ -13,10 +13,13 @@ local position = {
 	x = 0,
 	y = 32
 }
-local canvas = Canvas(160, 90, 1)
+local canvas = Canvas(160, 90)
 local camera = Camera(0, 0, 160, 90, 1)
-camera:offset(80, 45)
+camera:offset("center", "center")
+camera:set_limits(0, 0, 320, 180)
+camera:set_deadzone(60, 30, 100, 50)
 camera:follow(position, true)
+camera:move(position.x, position.y)
 local img = love.graphics.newImage("assets/knight.png")
 
 local ww, hh = love.graphics.getDimensions()
@@ -55,7 +58,7 @@ function love.update(dt)
 
 	if input.isKeyPressed("x") then
 		camera:set_zoom(zoom and 2 or 1, true)
-		camera:rotate(zoom and 360 or 0, true)
+		camera:rotate(zoom and 720 or 0, true)
 		zoom = not zoom
 	end
 
@@ -67,13 +70,15 @@ function love.draw()
 	canvas:attach()
 	camera:attach()
 	tilemap:draw()
-	love.graphics.rectangle("line", 160 - 16, 90 - 16, 32, 32)
+	love.graphics.rectangle("line", 160 - 32, 45 - 16, 32, 32)
 	sprite:draw(position.x, position.y)
 	rabbit:draw(32, 16)
 	camera:detach()
 	--tileset:draw()
+	camera:draw()
 	canvas:detach()
 
 	canvas:draw()
+	--camera:draw()
 	love.graphics.circle("line", ww / 2, hh / 2, 8)
 end
